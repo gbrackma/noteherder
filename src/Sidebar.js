@@ -4,6 +4,7 @@ const Sidebar = () =>{
 
     return(
         <div className='Sidebar'>
+        SideBar
         </div>
     )
 
