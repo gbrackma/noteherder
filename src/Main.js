@@ -7,9 +7,9 @@ import NoteForm from './NoteForm'
 const Main = () =>{
     return (
         <div className='Main'>
-        <Sidebar/>
-        <NoteList/>
-        <NoteForm/>
+        <Sidebar />
+        <NoteList />
+        <NoteForm />
         </div>
     )
 }
