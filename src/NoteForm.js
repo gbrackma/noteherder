@@ -8,4 +8,4 @@ const NoteForm = () =>{
 }
 
 
-export default NoteForms
+export default NoteForm
