@@ -23,11 +23,11 @@ const NoteList = () =>{
 
     ]
     return (
-        <div class="NoteList">
+        <div className="NoteList">
             <h3>Notes</h3>
             <ul id="notes">
-                <a class="active">
-                    {notes.map(currentItem => <Note note={currentItem}/>)}
+                <a className="active">
+                    {notes.map(currentItem => <Note key={currentItem.id} note={currentItem}/>)}
                 </a>
             </ul>
         </div>

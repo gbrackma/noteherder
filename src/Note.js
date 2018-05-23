@@ -5,11 +5,11 @@ const Note = (props) => {
 
     return (
         <li>
-            <div class="note">
-                <div class="note-title">
+            <div className="note">
+                <div className="note-title">
                     {props.note.title}
                 </div>
-                <div class="note-body">
+                <div className="note-body">
                     <p>
                         {props.note.body}
                     </p>
