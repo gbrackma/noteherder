@@ -18,7 +18,6 @@ const style = {
     display: 'flex',
     height: '100vh',
     alignItems: 'sretch',
-    
 }
 
 export default Main
