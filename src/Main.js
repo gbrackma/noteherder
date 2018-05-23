@@ -43,6 +43,23 @@ class Main extends React.Component {
 
     }
 
+    deleteNote = (note) => {
+
+        console.log('delete')
+
+        const notes = [...this.state.notes]
+
+
+        const i = notes.findIndex(currentNote => currentNote.id === note.id)
+        notes.splice(i, 1)
+
+
+        this.setState({ notes })
+        this.resetCurrentNote()
+
+    }
+
+
     resetCurrentNote = () => {
         this.setCurrentNote(this.blankNote())    
     }
@@ -60,6 +77,7 @@ class Main extends React.Component {
                 <NoteForm  
                  currentNote={this.state.currentNote}
                  saveNote={this.saveNote}
+                 deleteNote={this.deleteNote}
                  />
             </div>
         )
