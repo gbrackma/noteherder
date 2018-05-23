@@ -1,43 +1,45 @@
 import React from 'react'
-import {StyleSheet, css } from 'aphrodite'
+import { StyleSheet, css } from 'aphrodite'
 
 import quill from './quill.svg'
 import newIcon from './new.png'
 import newHover from './new-hover.png'
 
 const Sidebar = () => {
-  
-        return (
-            <nav className={css(styles.sidebar)}>
-                <div className={css(styles.logo)}>
-                    <img
-                        src={quill}
-                        alt="Noteherder"
-                        className={css(styles.logoImg)}
-                    />
-                </div>
-                <a
-                    href="/notes"
-                    className={css(styles.newNote)}
-                >
-                    <img
-                        src={newHover}
-                        alt="New note"
-                        className={css(styles.newNoteImg)}
-                    />
-                    <img
-                        src={newIcon}
-                        alt="New note"
-                        className={css(styles.newNoteImg, styles.newNoteImgHover)}
-                    />
-                </a>
-                <div className={css(styles.signOut)}>
-                    <button className={css(styles.button)}>
-                        <i className={`fas fa-sign-out-alt ${css(styles.buttonIcon)}`} title='sign out'></i>
-                    </button>
-                </div>
-            </nav>
-        )
+  return (
+    <nav className={css(styles.sidebar)}>
+      <div className={css(styles.logo)}>
+        <img
+          src={quill}
+          alt="Noteherder"
+          className={css(styles.logoImg)}
+        />
+      </div>
+      <a
+        href="/notes"
+        className={css(styles.newNote)}
+      >
+        <img
+          src={newHover}
+          alt="New note"
+          className={css(styles.newNoteImg)}
+        />
+        <img
+          src={newIcon}
+          alt="New note"
+          className={css(styles.newNoteImg, styles.newNoteImgHover)}
+        />
+      </a>
+      <div className={css(styles.signOut)}>
+        <button className={css(styles.button)}>
+          <i
+            className={`fas fa-sign-out-alt ${css(styles.buttonIcon)}`}
+            title="sign out"
+          ></i>
+        </button>
+      </div>
+    </nav>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -70,9 +72,9 @@ const styles = StyleSheet.create({
     transition: 'opacity 0.25s ease-in-out',
   },
   newNoteImgHover: {
-      '.hover': {
-          opacity: 0,
-      },
+    ':hover': {
+      opacity: 0,
+    },
   },
   signOut: {
     position: 'absolute',
