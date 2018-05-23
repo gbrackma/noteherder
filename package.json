@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "aphrodite": "2.2.1",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
-    "react-scripts": "1.1.4",
-    "aphrodite": "2.2.1"
+    "react-scripts": "1.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -14,8 +14,10 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "devDependencies": {
+    "firebase": "^5.0.3"
   }
 }

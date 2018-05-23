@@ -3,6 +3,7 @@ import React from 'react'
 import Sidebar from './Sidebar'
 import NoteList from './NoteList'
 import NoteForm from './NoteForm'
+import firebase from './firebase.js'
 
 class Main extends React.Component {
 
@@ -14,8 +15,16 @@ class Main extends React.Component {
         }
     }
 
+    getNotesInData() {
+        const notesRef = firebase.database().ref('notes');
+        notesRef.on('value', (snapshot) => {
+            let notesInData = snapshot.val();
+            return notesInData
+        })
+    }
+
     setCurrentNote = (note) => {
-        this.setState({currentNote: note})    
+        this.setState({ currentNote: note })
     }
 
     blankNote = () => {
@@ -23,19 +32,26 @@ class Main extends React.Component {
             id: null,
             title: '',
             body: '',
-        })   
+        })
     }
 
     saveNote = (note) => {
         const notes = [...this.state.notes]
 
         if (!note.id) {
-            note.id = Date.now()
+            var newNoteKey = firebase.database().ref().child('posts').push().key;
+            note.id = newNoteKey
             notes.push(note)
+            //const notesRef = firebase.database().ref('notes');
+            //notesRef.push(this.state.currentNote)
         } else {
-
-            const i = notes.findIndex(currentNote => currentNote.id === note.id)
+            const i = notes.findIndex((currentNote) => currentNote.id === note.id)
             notes[i] = note
+            firebase.database().ref('notes/' + note.id).set({
+                body: note.body,
+                title: note.title,
+            })
+            //method to get item and add
         }
 
         this.setState({ notes })
@@ -61,24 +77,25 @@ class Main extends React.Component {
 
 
     resetCurrentNote = () => {
-        this.setCurrentNote(this.blankNote())    
+        this.setCurrentNote(this.blankNote())
     }
 
     render() {
+
         return (
             <div className='Main' style={style} >
-                <Sidebar 
-                resetCurrentNote={this.resetCurrentNote}
+                <Sidebar
+                    resetCurrentNote={this.resetCurrentNote}
                 />
-                <NoteList 
-                notes={this.state.notes} 
-                setCurrentNote={this.setCurrentNote}
+                <NoteList
+                    notes={this.state.notes}
+                    setCurrentNote={this.setCurrentNote}
                 />
-                <NoteForm  
-                 currentNote={this.state.currentNote}
-                 saveNote={this.saveNote}
-                 deleteNote={this.deleteNote}
-                 />
+                <NoteForm
+                    currentNote={this.state.currentNote}
+                    saveNote={this.saveNote}
+                    deleteNote={this.deleteNote}
+                />
             </div>
         )
     }
