@@ -28,7 +28,11 @@ class Main extends React.Component {
         
             ],
 
-            currentNote: null,
+            currentNote: {
+                id: '',
+                    title: '',
+                    body: '',
+            },
         }
     }
 
@@ -41,7 +45,7 @@ class Main extends React.Component {
             <div className='Main' style={style} >
                 <Sidebar />
                 <NoteList notes={this.state.notes} setCurrentNote={this.setCurrentNote}/>
-                <NoteForm />
+                <NoteForm   currentNote={this.state.currentNote}/>
             </div>
         )
     }
