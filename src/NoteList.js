@@ -10,7 +10,11 @@ const NoteList = (props) =>{
             <h3>Notes</h3>
             <ul id="notes">
                 <a className="active">
-                    {props.notes.map(currentItem => <Note key={currentItem.id} note={currentItem}/>)}
+                    {props.notes.map(currentItem => 
+                    <Note key={currentItem.id} 
+                    note={currentItem} 
+                    setCurrentNote={props.setCurrentNote}
+                    />)}
                 </a>
             </ul>
         </div>

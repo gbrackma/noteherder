@@ -26,14 +26,21 @@ class Main extends React.Component {
                     body: 'body body body',
                 },
         
-            ]
+            ],
+
+            currentNote: null,
         }
     }
+
+    setCurrentNote = (note) => {
+        this.setState({currentNote: note})    
+    }
+
     render() {
         return (
             <div className='Main' style={style} >
                 <Sidebar />
-                <NoteList notes={this.state.notes}/>
+                <NoteList notes={this.state.notes} setCurrentNote={this.setCurrentNote}/>
                 <NoteForm />
             </div>
         )
