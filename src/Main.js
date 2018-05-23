@@ -9,30 +9,8 @@ class Main extends React.Component {
     constructor() {
         super()
         this.state = {
-            notes: [
-                {
-                    id: 1,
-                    title: 'why i <3 js',
-                    body: 'bc i like to code',
-                },
-                {
-                    id: 2,
-                    title: 'hello',
-                    body: 'this is hello text',
-                },
-                {
-                    id: 3,
-                    title: 'notenotenote',
-                    body: 'body body body',
-                },
-        
-            ],
-
-            currentNote: {
-                id: '',
-                    title: '',
-                    body: '',
-            },
+            notes: [],
+            currentNote: this.blankNote(),
         }
     }
 
@@ -40,12 +18,49 @@ class Main extends React.Component {
         this.setState({currentNote: note})    
     }
 
+    blankNote = () => {
+        return ({
+            id: null,
+            title: '',
+            body: '',
+        })   
+    }
+
+    saveNote = (note) => {
+        const notes = [...this.state.notes]
+
+        if (!note.id) {
+            note.id = Date.now()
+            notes.push(note)
+        } else {
+
+            const i = notes.findIndex(currentNote => currentNote.id === note.id)
+            notes[i] = note
+        }
+
+        this.setState({ notes })
+        this.setState({ currentNote: note })
+
+    }
+
+    resetCurrentNote = () => {
+        this.setCurrentNote(this.blankNote())    
+    }
+
     render() {
         return (
             <div className='Main' style={style} >
-                <Sidebar />
-                <NoteList notes={this.state.notes} setCurrentNote={this.setCurrentNote}/>
-                <NoteForm   currentNote={this.state.currentNote}/>
+                <Sidebar 
+                resetCurrentNote={this.resetCurrentNote}
+                />
+                <NoteList 
+                notes={this.state.notes} 
+                setCurrentNote={this.setCurrentNote}
+                />
+                <NoteForm  
+                 currentNote={this.state.currentNote}
+                 saveNote={this.saveNote}
+                 />
             </div>
         )
     }
