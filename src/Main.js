@@ -9,17 +9,39 @@ class Main extends React.Component {
 
     constructor() {
         super()
+        //get the initial data
         this.state = {
             notes: [],
             currentNote: this.blankNote(),
         }
+
+        this.getNotesInData()
     }
 
     getNotesInData() {
         const notesRef = firebase.database().ref('notes');
         notesRef.on('value', (snapshot) => {
-            let notesInData = snapshot.val();
-            return notesInData
+            const notes = [...this.state.notes]
+
+                snapshot.forEach(function (childSnapshot) {
+                    let item = childSnapshot.val()
+
+                    let itemToPush = {
+                        id: childSnapshot.key,
+                        title: item.title,
+                        body: item.body,
+                    }
+
+                    notes.push(itemToPush)
+                    /*
+                    console.log(itemToPush)
+
+                    returnArr.push(itemToPush)*/
+
+                    
+                })
+
+                this.setState({ notes })
         })
     }
 
@@ -39,11 +61,10 @@ class Main extends React.Component {
         const notes = [...this.state.notes]
 
         if (!note.id) {
-            var newNoteKey = firebase.database().ref().child('posts').push().key;
+            let newNoteKey = firebase.database().ref().child('notes').push().key;
             note.id = newNoteKey
             notes.push(note)
-            //const notesRef = firebase.database().ref('notes');
-            //notesRef.push(this.state.currentNote)
+
         } else {
             const i = notes.findIndex((currentNote) => currentNote.id === note.id)
             notes[i] = note
@@ -68,6 +89,7 @@ class Main extends React.Component {
 
         const i = notes.findIndex(currentNote => currentNote.id === note.id)
         notes.splice(i, 1)
+        firebase.database().ref('notes/' + note.id).remove();
 
 
         this.setState({ notes })
