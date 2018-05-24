@@ -3,7 +3,7 @@ import React from 'react'
 import Sidebar from './Sidebar'
 import NoteList from './NoteList'
 import NoteForm from './NoteForm'
-import firebase from './firebase.js'
+import base from './firebase.js'
 
 class Main extends React.Component {
 
@@ -18,7 +18,7 @@ class Main extends React.Component {
     }
 
     componentDidMount() {
-        const notesRef = firebase.database().ref('notes');
+        /*const notesRef = firebase.database().ref('notes');
         notesRef.on('value', (snapshot) => {
             const notes = [...this.state.notes]
 
@@ -36,6 +36,12 @@ class Main extends React.Component {
                 })
 
                 this.setState({ notes })
+        })*/
+
+        base.syncState(`notes`, {
+            context: this,
+            state: 'notes',
+            asArray: true,
         })
     }
 
@@ -55,18 +61,19 @@ class Main extends React.Component {
         const notes = [...this.state.notes]
 
         if (!note.id) {
-            let newNoteKey = firebase.database().ref().child('notes').push().key;
-            note.id = newNoteKey
+            /*let newNoteKey = firebase.database().ref().child('notes').push().key;
+            note.id = newNoteKey*/
+            note.id = Date.now();
             notes.push(note)
 
         } else {
             const i = notes.findIndex((currentNote) => currentNote.id === note.id)
             notes[i] = note
-            firebase.database().ref('notes/' + note.id).set({
+            /*firebase.database().ref('notes/' + note.id).set({
                 body: note.body,
                 title: note.title,
             })
-            //method to get item and add
+            //method to get item and add*/
         }
 
         this.setState({ notes })
@@ -83,7 +90,8 @@ class Main extends React.Component {
 
         const i = notes.findIndex(currentNote => currentNote.id === note.id)
         notes.splice(i, 1)
-        firebase.database().ref('notes/' + note.id).remove();
+       
+       // firebase.database().ref('notes/' + note.id).remove();
 
 
         this.setState({ notes })

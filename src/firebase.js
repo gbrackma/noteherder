@@ -1,4 +1,6 @@
-import firebase from 'firebase'
+import firebase from 'firebase/app'
+import database from 'firebase/database'
+import Rebase from 're-base'
 
 var config = {
     apiKey: "AIzaSyDYDOYyY4AtKjpQ5f2_aUCKEPFsQyuAPmU",
@@ -9,5 +11,8 @@ var config = {
     messagingSenderId: "837171186853"
   };
   
-firebase.initializeApp(config);
-export default firebase;
+var app = firebase.initializeApp(config);
+var db = firebase.database(app);
+var base = Rebase.createClass(db);
+
+export default base;
