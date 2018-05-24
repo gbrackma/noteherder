@@ -15,10 +15,9 @@ class Main extends React.Component {
             currentNote: this.blankNote(),
         }
 
-        this.getNotesInData()
     }
 
-    getNotesInData() {
+    componentDidMount() {
         const notesRef = firebase.database().ref('notes');
         notesRef.on('value', (snapshot) => {
             const notes = [...this.state.notes]
@@ -33,12 +32,7 @@ class Main extends React.Component {
                     }
 
                     notes.push(itemToPush)
-                    /*
-                    console.log(itemToPush)
 
-                    returnArr.push(itemToPush)*/
-
-                    
                 })
 
                 this.setState({ notes })
@@ -82,7 +76,7 @@ class Main extends React.Component {
 
     deleteNote = (note) => {
 
-        console.log('delete')
+        //console.log('delete')
 
         const notes = [...this.state.notes]
 

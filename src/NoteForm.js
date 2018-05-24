@@ -36,7 +36,7 @@ const NoteForm = ({currentNote, saveNote, deleteNote}) =>{
               />
             </p>
             
-            <textarea name="body" value={currentNote.body} onChange={handleChanges}></textarea>
+            <textarea name="body" value={currentNote.body} onChange={handleChanges} placeholder="Add some text to your note "></textarea>
           </form>
         </div>
     )
