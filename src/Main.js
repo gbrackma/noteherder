@@ -110,6 +110,7 @@ class Main extends React.Component {
             <div className='Main' style={style} >
                 <Sidebar
                     resetCurrentNote={this.resetCurrentNote}
+                    signOut={this.props.signOut}
                 />
                 <NoteList
                     notes={this.state.notes}
