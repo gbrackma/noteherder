@@ -38,7 +38,10 @@ class Main extends React.Component {
                 this.setState({ notes })
         })*/
 
-        base.syncState(`notes`, {
+        let nameofNotes = 'notes-' + this.props.uid
+        //console.log(nameCompare)
+
+        base.syncState(nameofNotes, {
             context: this,
             state: 'notes',
             asArray: true,
