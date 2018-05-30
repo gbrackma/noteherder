@@ -1,46 +1,81 @@
-import React from 'react'
+import React, { Component } from 'react'
+
 import './NoteForm.css'
 
-const NoteForm = ({currentNote, saveNote, deleteNote}) =>{
+class NoteForm extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      note: this.blankNote(),
+    }
+  }
 
-  const handleChanges = (ev) => {
-    const note = {...currentNote}
+  componentWillReceiveProps = (newProps) => {
+    // Get the ID from the URL
+    const newId = newProps.match.params.id
+
+    // Find the note with that ID
+    console.log(newProps.notes)
+    const i = newProps.notes.findIndex(currentNote => currentNote.id.toString() === newId)
+    const note = newProps.notes[i] || this.blankNote()
+
+    console.log(i)
+
+    // Update state with that note, if found
+    if (note) {
+      this.setState({ note })
+    }
+  }
+
+  blankNote = () => {
+    return {
+      id: null,
+      title: '',
+      body: '',
+    }
+  }
+
+  handleChanges = (ev) => {
+    const note = {...this.state.note}
     note[ev.target.name] = ev.target.value
-
-    saveNote(note)
-
-  }
-
-  const handleDelete = (ev) => {
-    console.log('hello')
-    const note = {...currentNote}
-
-    deleteNote(note)
-  }
-    return (
-        <div className="NoteForm">
-          <div className="form-actions">
-            <button type="button" onClick={handleDelete}>
-              <i className="fa fa-trash-alt"       
-              ></i>
-            </button>
-          </div>
-          <form>
-            <p>
-              <input
-                type="text"
-                name="title"
-                placeholder="Title your note... "
-                value={currentNote.title}
-                onChange={handleChanges}
-              />
-            </p>
-            
-            <textarea name="body" value={currentNote.body} onChange={handleChanges} placeholder="Add some text to your note "></textarea>
-          </form>
-        </div>
+    this.setState(
+      { note },
+      () => (this.props.saveNote(note))
     )
-}
+  }
 
+  render() {
+    const { removeCurrentNote } = this.props
+    return (
+      <div className="NoteForm">
+        <div className="form-actions">
+          <button
+            type="button"
+            onClick={removeCurrentNote}
+          >
+            <i className="far fa-trash-alt"></i>
+          </button>
+        </div>
+        <form>
+          <p>
+            <input
+              type="text"
+              name="title"
+              placeholder="Title your note"
+              value={this.state.note.title}
+              onChange={this.handleChanges}
+            />
+          </p>
+
+          <textarea
+            name="body"
+            value={this.state.note.body}
+            onChange={this.handleChanges}
+          ></textarea>
+        </form>
+      </div>
+    )
+  }
+}
 
 export default NoteForm

@@ -112,8 +112,9 @@ class Main extends React.Component {
 
         const formProps = {
             currentNote: this.state.currentNote,
-            saveNote: this.state.saveNote,
-            deleteNote: this.state.deleteNote,
+            saveNote: this.saveNote,
+            deleteNote: this.deleteNote,
+            notes: this.state.notes
         }
 
         return (
