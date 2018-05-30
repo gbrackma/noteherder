@@ -65,6 +65,12 @@ class App extends Component {
             ) }
           />
 
+          <Route render={() => (
+            this.signedIn()
+            ? <Redirect to='/notes' />
+            : <Redirect to='/signin' />
+          )}/>
+
         </Switch>
       </div>
     )
