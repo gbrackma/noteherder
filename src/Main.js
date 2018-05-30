@@ -4,6 +4,7 @@ import Sidebar from './Sidebar'
 import NoteList from './NoteList'
 import NoteForm from './NoteForm'
 import base from './firebase.js'
+import { Route, Switch } from 'react-router-dom'
 
 class Main extends React.Component {
 
@@ -93,8 +94,8 @@ class Main extends React.Component {
 
         const i = notes.findIndex(currentNote => currentNote.id === note.id)
         notes.splice(i, 1)
-       
-       // firebase.database().ref('notes/' + note.id).remove();
+
+        // firebase.database().ref('notes/' + note.id).remove();
 
 
         this.setState({ notes })
@@ -108,6 +109,12 @@ class Main extends React.Component {
     }
 
     render() {
+
+        const formProps = {
+            currentNote: this.state.currentNote,
+            saveNote: this.state.saveNote,
+            deleteNote: this.state.deleteNote,
+        }
 
         return (
             <div className='Main' style={style} >
@@ -123,6 +130,15 @@ class Main extends React.Component {
                     currentNote={this.state.currentNote}
                     saveNote={this.saveNote}
                     deleteNote={this.deleteNote}
+                />
+                <Route
+                    path='/notes/:id'
+                    render={(navProps) => (
+                        <NoteForm
+                            {...formProps}
+                            {...navProps}
+                        />
+                    )}
                 />
             </div>
         )
