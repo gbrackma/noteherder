@@ -13,7 +13,6 @@ class Main extends React.Component {
         //get the initial data
         this.state = {
             notes: [],
-            currentNote: this.blankNote(),
         }
 
     }
@@ -49,10 +48,6 @@ class Main extends React.Component {
         })
     }
 
-    setCurrentNote = (note) => {
-        this.setState({ currentNote: note })
-    }
-
     blankNote = () => {
         return ({
             id: null,
@@ -62,6 +57,7 @@ class Main extends React.Component {
     }
 
     saveNote = (note) => {
+        let shouldRedirect = false
         const notes = [...this.state.notes]
 
         if (!note.id) {
@@ -69,6 +65,7 @@ class Main extends React.Component {
             note.id = newNoteKey*/
             note.id = Date.now();
             notes.push(note)
+            shouldRedirect = true;
 
         } else {
             const i = notes.findIndex((currentNote) => currentNote.id === note.id)
@@ -81,7 +78,9 @@ class Main extends React.Component {
         }
 
         this.setState({ notes })
-        this.setState({ currentNote: note })
+        if (shouldRedirect) {
+            this.props.history.push(`/notes/${note.id}`)
+        }
 
     }
 
@@ -90,28 +89,26 @@ class Main extends React.Component {
         //console.log('delete')
 
         const notes = [...this.state.notes]
+        const id = note.id
 
 
-        const i = notes.findIndex(currentNote => currentNote.id === note.id)
+
+        const i = notes.findIndex(currentNote => currentNote.id === id)
         notes.splice(i, 1)
 
         // firebase.database().ref('notes/' + note.id).remove();
 
 
         this.setState({ notes })
-        this.resetCurrentNote()
+        this.props.history.push('/notes')
 
     }
 
 
-    resetCurrentNote = () => {
-        this.setCurrentNote(this.blankNote())
-    }
 
     render() {
 
         const formProps = {
-            currentNote: this.state.currentNote,
             saveNote: this.saveNote,
             deleteNote: this.deleteNote,
             notes: this.state.notes
@@ -120,7 +117,6 @@ class Main extends React.Component {
         return (
             <div className='Main' style={style} >
                 <Sidebar
-                    resetCurrentNote={this.resetCurrentNote}
                     signOut={this.props.signOut}
                 />
                 <NoteList

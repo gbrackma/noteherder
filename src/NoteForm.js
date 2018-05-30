@@ -45,13 +45,13 @@ class NoteForm extends Component {
   }
 
   render() {
-    const { removeCurrentNote } = this.props
+    const { deleteNote } = this.props
     return (
       <div className="NoteForm">
         <div className="form-actions">
           <button
             type="button"
-            onClick={removeCurrentNote}
+            onClick={() => deleteNote(this.state.note)}
           >
             <i className="far fa-trash-alt"></i>
           </button>
