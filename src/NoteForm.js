@@ -15,11 +15,11 @@ class NoteForm extends Component {
     const newId = newProps.match.params.id
 
     // Find the note with that ID
-    console.log(newProps.notes)
+    //console.log(newProps.notes)
     const i = newProps.notes.findIndex(currentNote => currentNote.id.toString() === newId)
     const note = newProps.notes[i] || this.blankNote()
 
-    console.log(i)
+    //console.log(i)
 
     // Update state with that note, if found
     if (note) {
@@ -32,12 +32,17 @@ class NoteForm extends Component {
       id: null,
       title: '',
       body: '',
+      updatedAt: '',
     }
   }
 
   handleChanges = (ev) => {
-    const note = {...this.state.note}
+    const note = { ...this.state.note }
     note[ev.target.name] = ev.target.value
+
+    var today = new Date()
+    note.updatedAt = today.getMonth() + '/' + (today.getDate()) + '/' + today.getFullYear() + ' at ' + today.getHours() + ':' + today.getUTCMinutes()
+    console.log(note)
     this.setState(
       { note },
       () => (this.props.saveNote(note))
@@ -66,6 +71,8 @@ class NoteForm extends Component {
               onChange={this.handleChanges}
             />
           </p>
+
+          <h3>Time last updated: {this.state.note.updatedAt}</h3>
 
           <textarea
             name="body"
