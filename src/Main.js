@@ -64,7 +64,7 @@ class Main extends React.Component {
             /*let newNoteKey = firebase.database().ref().child('notes').push().key;
             note.id = newNoteKey*/
             note.id = Date.now();
-            notes.push(note)
+            notes.unshift(note)
             shouldRedirect = true;
 
         } else {
@@ -75,6 +75,9 @@ class Main extends React.Component {
                 title: note.title,
             })
             //method to get item and add*/
+            notes.splice(i,1)
+            notes.unshift(note)
+
         }
 
         this.setState({ notes })
