@@ -32,7 +32,7 @@ class NoteForm extends Component {
       id: null,
       title: '',
       body: '',
-      //updatedAt: '',
+      updatedAt: 0,
     }
   }
 
@@ -41,7 +41,7 @@ class NoteForm extends Component {
     note[ev.target.name] = ev.target.value
 
     //var today = new Date()
-    //note.updatedAt = today.getMonth() + '/' + (today.getDate()) + '/' + today.getFullYear() + ' at ' + today.getHours() + ':' + today.getUTCMinutes()
+   // note.updatedAt = today.getMonth() + '/' + (today.getDate()) + '/' + today.getFullYear() + ' at ' + today.getHours() + ':' + today.getUTCMinutes()
     //console.log(note)
     this.setState(
       { note },
@@ -72,8 +72,7 @@ class NoteForm extends Component {
             />
           </p>
 
-          <h3>Time last updated:</h3>
-
+          
           <textarea
             name="body"
             value={this.state.note.body}
@@ -86,3 +85,5 @@ class NoteForm extends Component {
 }
 
 export default NoteForm
+
+//<h3>Time last updated: {this.state.note.updatedAt}</h3>
